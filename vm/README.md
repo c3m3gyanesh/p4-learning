@@ -93,7 +93,7 @@ The VM comes with two users, `vagrant` and `p4`, for both the password is the sa
 Building the vagrant image can take some time. If you want to have an already built VM you can download the Open Virtual 
 Appliance (OVA) package and import it with a x86 software virtualizer that supports the format (this has been tested with VirtualBox only).
 
-Pre-built OVA package: [ova](https://drive.google.com/open?id=1OXaw0_iJrv2QZABO2_x3lvn1y2RuNGI4)
+Pre-built OVA package: [ova](https://drive.google.com/file/d/1VLSstfcmx0o0Kc8M1HytQXBvSFqxlDG3/view?usp=sharing)
 
 **Note:** During the course we might need to update the OVA package.
 
@@ -111,8 +111,6 @@ the boostrap script:
 sudo root-bootstrap.sh
 ```
 
-
-
 ## FAQ
 
 #### How to change the keyboard layout?
@@ -120,3 +118,9 @@ run this command in the terminal:
 ```bash
 sudo dpkg-reconfigure keyboard-configuration
 ```
+
+#### `Vagrant Up` hangs
+
+When you do the first `vagrant up` the ubuntu VM first runs `apt-get update`
+which for some reason does not work with some old vagrant `boxes` if you happen
+to ran into that problem try to update your boxes with `vagrant box update`.

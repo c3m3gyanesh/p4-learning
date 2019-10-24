@@ -97,6 +97,17 @@ mkdir -p ${BUILD_DIR}
 DEBUG_FLAGS=true
 ENABLE_P4_RUNTIME=true
 
+#install mininet
+function do_mininet {
+
+    cd $HOME
+
+    git clone git://github.com/mininet/mininet mininet
+    cd mininet
+    sudo ./util/install.sh -nwv
+    cd ..
+}
+
 #Install Protobuf
 function do_protobuf {
     cd ${BUILD_DIR}
@@ -360,6 +371,13 @@ function do_p4-learning {
     cd ..
 }
 
+# Due to this bug: https://github.com/jafingerhut/p4-guide/tree/master/linux-veth-bug
+# we need to verify if the current kernel is buggy or not
+function do_verify-ubuntu-bug {
+    sudo pip install bs4
+    sudo python /vagrant/bin/test_veth_intf.py
+}
+
 do_protobuf
 if [ "$ENABLE_P4_RUNTIME" = true ] ; then
     do_grpc
@@ -373,8 +391,10 @@ do_p4c
 #do_scapy-vxlan
 do_scapy
 do_ptf
+do_mininet
 do_p4-utils
 do_install_scripts
 do_p4-learning
+do_verify-ubuntu-bug
 
 echo "Done with p4-tools install!"
